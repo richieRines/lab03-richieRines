@@ -293,6 +293,8 @@ ggplot(nobel_living_science, aes(y = country_us)) +
   facet_wrap(. ~ category)
 ```
 
+The 4 bar graphs show that the majority of winners are from the US, so yes, the Buzzfeed headline is correct.
+
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.d*
 
 ## But of those US-based Nobel laureates, many were born in other countries
@@ -303,6 +305,11 @@ ggplot(nobel_living_science, aes(y = country_us)) +
 
 4.  Create a new variable called `born_country_us` that has the value `"USA"` if the laureate is born in the US, and `"Other"` otherwise.
     How many of the winners are born in the US?
+    
+```{r}
+nobel_living <- nobel_living %>%
+  mutate(born_country_us = if_else(born_country_us == "USA", "USA", "Other"))
+```
 
 5.  Add a second variable to your visualization from Exercise 3 based on whether the laureate was born in the US or not.
     Based on your visualization, do the data appear to support Buzzfeed's claim?
@@ -311,6 +318,22 @@ ggplot(nobel_living_science, aes(y = country_us)) +
     -   Your final visualization should contain a facet for each category.
     -   Within each facet, there should be a bar for whether the laureate won the award in the US or not.
     -   Each bar should have segments for whether the laureate was born in the US or not.
+  
+```{r}
+nobel_living <- nobel_living %>%
+  mutate(country_us = if_else(country == "USA", "USA", "Other"),
+         born_country_us = if_else(born_country_us == "USA", "USA", "Other"))
+
+nobel_living_science <- nobel_living %>%
+  filter(category %in% c("Physics", "Medicine", "Chemistry", "Economics"))
+
+ggplot(nobel_living_science, aes(y = country_us, fill = born_country_us)) +
+  geom_bar() +
+  facet_wrap(. ~ category) +
+  labs(x = "Count", y = "Where they were when they won", fill = "Birth country")
+```
+
+Buzzfeed's claim appears to be accurate. Looking at the graphs, we can see that a decent chunk (although not the majority) of USA winners were born in other coutnries. In the chemistry category, for example, 20 USA winners were born in the US, while 12 of them were born in other countries.
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 

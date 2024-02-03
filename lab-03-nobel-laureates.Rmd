@@ -308,7 +308,7 @@ The 4 bar graphs show that the majority of winners are from the US, so yes, the 
     
 ```{r}
 nobel_living <- nobel_living %>%
-  mutate(born_country_us = if_else(born_country_us == "USA", "USA", "Other"))
+  mutate(born_country_us = if_else(born_country == "USA", "USA", "Other"))
 ```
 
 5.  Add a second variable to your visualization from Exercise 3 based on whether the laureate was born in the US or not.
@@ -322,7 +322,7 @@ nobel_living <- nobel_living %>%
 ```{r}
 nobel_living <- nobel_living %>%
   mutate(country_us = if_else(country == "USA", "USA", "Other"),
-         born_country_us = if_else(born_country_us == "USA", "USA", "Other"))
+         born_country_us = if_else(born_country == "USA", "USA", "Other"))
 
 nobel_living_science <- nobel_living %>%
   filter(category %in% c("Physics", "Medicine", "Chemistry", "Economics"))
